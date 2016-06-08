@@ -24,7 +24,15 @@ namespace Hangman
                 {
                     Console.WriteLine("Password : {0}", mask);
                     Console.Write("Letter : ");
-                    letter = Convert.ToChar(Console.ReadLine());
+                    try
+                    {
+                        letter = Convert.ToChar(Console.ReadLine());
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception.Message);
+                        continue;
+                    }
                     if (password.Contains(letter))
                     {
                         Console.WriteLine("Yeah!");
