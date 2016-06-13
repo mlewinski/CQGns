@@ -11,20 +11,29 @@ namespace BinomialCoefficient
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(CalculateBinomialCoefficient("x","y",10));
+            Console.WriteLine(CalculateBinomialCoefficient("a", "b", 3));
             Console.ReadLine();
         }
 
         public static string CalculateBinomialCoefficient(string symbolX, string symbolY, int n) {
             StringBuilder sb = new StringBuilder();
+            BigInteger[] binomials = new BigInteger[n+1];
+            int numberOfBinomials;
+            if (n%2 == 0) numberOfBinomials = n/2;
+            else numberOfBinomials = n/2 + 1;
+            for (int i = 0; i <= numberOfBinomials; i++)
+            {
+                binomials[i] = CalculateBinomial(n, i);
+                binomials[n - i] = binomials[i];
+            }
             for (int k = 0; k <= n; k++)
             {
                 sb.Append((k==0)?"":"+");
-                sb.Append(CalculateBinomial(n, k));
+                sb.Append(binomials[k]);
                 if (k == n) sb.Append("");
                 else
                 {
-                    sb.Append("(");
+                    sb.Append("*(");
                     sb.Append(symbolX);
                     sb.Append("^");
                     sb.Append(n-k);
@@ -33,8 +42,7 @@ namespace BinomialCoefficient
                 if (k == 0) sb.Append("");
                 else
                 {
-                    sb.Append("*");
-                    sb.Append("(");
+                    sb.Append("*(");
                     sb.Append(symbolY);
                     sb.Append("^");
                     sb.Append(k);
@@ -42,6 +50,7 @@ namespace BinomialCoefficient
                 }
                 
             }
+            GC.Collect();
             return sb.ToString();
         }
 
